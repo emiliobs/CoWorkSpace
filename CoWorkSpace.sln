@@ -5,6 +5,16 @@ VisualStudioVersion = 17.14.36429.23 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoWorkSpace.Domain", "CoWorkSpace.Domain\CoWorkSpace.Domain.csproj", "{27E113AA-1D1B-46AE-932E-C08F6E760E8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoWorkSpace.Infraestructure", "CoWorkSpace.Infraestructure\CoWorkSpace.Infraestructure.csproj", "{58841D4E-69D5-47DD-B596-E40EBCB95624}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoWorkSpace.Business", "CoWorkSpace.Business\CoWorkSpace.Business.csproj", "{212B27D9-3D9F-4BFF-9674-43E673CD1FAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoWorkSpace.Application", "CoWorkSpace.Application\CoWorkSpace.Application.csproj", "{0D15C133-AEB1-4744-AD6D-E6D32F8B02D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoWorkSpace.API", "CoWorkSpace.API\CoWorkSpace.API.csproj", "{871378EA-590A-4C2C-A28E-0B962B69E686}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoWorkSpace.WEB", "CoWorkSpace.WEB\CoWorkSpace.WEB.csproj", "{00559C91-5BD4-4E89-AEED-D8E555FC6B9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +25,26 @@ Global
 		{27E113AA-1D1B-46AE-932E-C08F6E760E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27E113AA-1D1B-46AE-932E-C08F6E760E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27E113AA-1D1B-46AE-932E-C08F6E760E8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58841D4E-69D5-47DD-B596-E40EBCB95624}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58841D4E-69D5-47DD-B596-E40EBCB95624}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58841D4E-69D5-47DD-B596-E40EBCB95624}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58841D4E-69D5-47DD-B596-E40EBCB95624}.Release|Any CPU.Build.0 = Release|Any CPU
+		{212B27D9-3D9F-4BFF-9674-43E673CD1FAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{212B27D9-3D9F-4BFF-9674-43E673CD1FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{212B27D9-3D9F-4BFF-9674-43E673CD1FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{212B27D9-3D9F-4BFF-9674-43E673CD1FAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D15C133-AEB1-4744-AD6D-E6D32F8B02D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D15C133-AEB1-4744-AD6D-E6D32F8B02D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D15C133-AEB1-4744-AD6D-E6D32F8B02D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D15C133-AEB1-4744-AD6D-E6D32F8B02D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{871378EA-590A-4C2C-A28E-0B962B69E686}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{871378EA-590A-4C2C-A28E-0B962B69E686}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{871378EA-590A-4C2C-A28E-0B962B69E686}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{871378EA-590A-4C2C-A28E-0B962B69E686}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00559C91-5BD4-4E89-AEED-D8E555FC6B9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00559C91-5BD4-4E89-AEED-D8E555FC6B9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00559C91-5BD4-4E89-AEED-D8E555FC6B9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00559C91-5BD4-4E89-AEED-D8E555FC6B9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
