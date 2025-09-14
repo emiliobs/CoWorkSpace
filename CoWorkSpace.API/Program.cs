@@ -1,3 +1,5 @@
+using CoWorkSpace.Infraestructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoWorkSpace.API
 {
@@ -8,6 +10,9 @@ namespace CoWorkSpace.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            // Data Context
+            builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -24,7 +29,6 @@ namespace CoWorkSpace.API
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
