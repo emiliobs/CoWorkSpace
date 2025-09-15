@@ -98,6 +98,17 @@ namespace CoWorkSpace.API
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
+            // CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -109,6 +120,8 @@ namespace CoWorkSpace.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAllOrigins");
 
             app.UseAuthentication();
 
