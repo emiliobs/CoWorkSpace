@@ -1,5 +1,9 @@
+using CoWorkSpace.WEB.Auth;
+using CoWorkSpace.WEB.Services;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor.Services;
 
 namespace CoWorkSpace.WEB
 {
@@ -10,8 +14,14 @@ namespace CoWorkSpace.WEB
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
-
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            var url = "https://localhost:7153";
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(url) });
+            builder.Services.AddAuthorizationCore();
+            builder.Services.AddMudServices();
+            builder.Services.AddScoped<AuthenticationProviderJWT>();
+            builder.Services.AddScoped<AuthService>();
+            builder.Services.AddScoped<ILoginServices, AuthenticationProviderJWT>(provider => provider.GetRequiredService<AuthenticationProviderJWT>());
+            builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProviderJWT>(provider => provider.GetRequiredService<AuthenticationProviderJWT>());
 
             await builder.Build().RunAsync();
         }

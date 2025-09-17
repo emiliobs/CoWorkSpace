@@ -1,39 +1,47 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">CoWorkSpace.WEB</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
+﻿﻿﻿<AuthorizeView Roles="Admin">
+    <Authorized> 
+        <MudNavMenu>
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">
+                <MudText Style="color: #333;">Inicio</MudText>
+            </MudNavLink>            
+            <MudNavLink Href="/spaces" Icon="@Icons.Material.Filled.GridView">
+                <MudText Style="color: #333;">Espacios</MudText>
+            </MudNavLink>
+            <MudNavLink Href="/reservas" Icon="@Icons.Material.Filled.BookOnline">
+                <MudText Style="color: #333;">Mis Reservas</MudText>
+            </MudNavLink>
+    <MudNavLink Href="/paymenta" Icon="@Icons.Material.Filled.Payment">
+        <MudText Style="color: #333;">Pagos</MudText>
+    </MudNavLink>
+            <MudNavLink Href="/perfil" Icon="@Icons.Material.Filled.Person">
+                <MudText Style="color: #333;">Perfil</MudText>
+            </MudNavLink>
+    <MudNavLink Href="/salir" Icon="@Icons.Material.Filled.ExitToApp">
+        <MudText Style="color: #333;">Salir</MudText>
+    </MudNavLink>
+            <MudNavLink Href="/admin" Icon="@Icons.Material.Filled.ManageAccounts">
+                <MudText Style="color: #333;">Admin</MudText>
+            </MudNavLink>
+        </MudNavMenu>
+    </Authorized>
+</AuthorizeView> 
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
+<AuthorizeView Roles="Customer">
+    <Authorized>
+        <MudNavMenu>
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">
+                <MudText Style="color: #333;">Inicio</MudText>
+            </MudNavLink>
+            <MudNavLink Href="/spaces" Icon="@Icons.Material.Filled.GridView">
+                <MudText Style="color: #333;">Espacios</MudText>
+            </MudNavLink>
+            <MudNavLink Href="/reservas" Icon="@Icons.Material.Filled.BookOnline">
+                <MudText Style="color: #333;">Mis Reservas</MudText>
+            </MudNavLink>
+           
+            <MudNavLink Href="/perfil" Icon="@Icons.Material.Filled.Person">
+                <MudText Style="color: #333;">Perfil</MudText>
+            </MudNavLink>            
+        </MudNavMenu>
+    </Authorized>
+</AuthorizeView>

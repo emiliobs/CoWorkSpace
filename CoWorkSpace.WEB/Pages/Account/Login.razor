@@ -1,0 +1,104 @@
+﻿@page "/login"
+
+<MudContainer MaxWidth="MaxWidth.ExtraSmall" Class="mt-10">
+    <MudPaper Class="pa-6 rounded-lg" Elevation="25">
+        <MudIcon Icon="@Icons.Material.Filled.Business"
+                 Color="Color.Primary"
+                 Size="Size.Large"
+                 Class="mx-auto d-block mb-2" />
+        <MudText Typo="Typo.h4" Color="Color.Primary" Class="text-center mb-6">CoWorkSpace</MudText>
+        <MudText Typo="Typo.h6" Class="text-center mb-6">Iniciar Sesión</MudText>
+        <MudTextField @bind-Value="login.Email" Label="Correo Electrónico" Variant="Variant.Outlined"
+                      FullWidth="true" Margin="Margin.Dense" Required="true"
+                      HelperText="Por favor, ingresa tu correo electrónico." />
+
+        <MudTextField @bind-Value="login.Password" Label="Contraseña" Variant="Variant.Outlined"
+                      FullWidth="true" Margin="Margin.Dense" InputType="@PasswordInput"
+                      Required="true" HelperText="Por favor, ingresa tu contraseña."
+                      Class="mt-4" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon"
+                      OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" />
+
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-6 w-100"
+                   OnClick="HandleLogin">Iniciar Sesión</MudButton>
+
+        <MudText Class="text-center mt-4">
+            ¿No tienes cuenta? <MudLink Href="/register" Color="Color.Primary">Regístrate aquí</MudLink>
+        </MudText>
+        <MudText Class="text-center mt-4">
+            ¿Olvidaste tu contraseña? <MudLink Href="/resetPassword" Color="Color.Primary">Recuperala aquí</MudLink>
+        </MudText>
+    </MudPaper>
+</MudContainer>
+
+
+@code
+{
+    private readonly LoginRequestDTO login = new();
+    public string Password { get; set; } = string.Empty;
+
+    [Inject] private HttpClient HttpClient { get; set; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] private ISnackbar Snackbar { get; set; } = null!;
+    [Inject] private ILoginServices LoginServices  { get; set; } = null!;
+    [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
+
+
+    private bool isShow;
+    private InputType PasswordInput = InputType.Password;
+    private string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Password = login.Password;
+
+    }
+
+    private void ButtonTestclick()
+    {
+        if (isShow)
+        {
+            isShow = false;
+            PasswordInput = InputType.Password;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+        }
+        else
+        {
+            isShow = true;
+            PasswordInput = InputType.Text;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+
+        }
+    }
+
+    private async Task HandleLogin()
+    {
+        try
+        {
+            var url = "api/auth/login";
+            var response = await HttpClient.PostAsJsonAsync(url, login);
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var loginResponse = JsonSerializer.Deserialize<LoginResponseDTO>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                if (loginResponse != null && loginResponse.IsAuthenticated)
+                {
+                    await ((AuthenticationProviderJWT)AuthenticationStateProvider).Login(loginResponse.Token);
+                    NavigationManager.NavigateTo("/");
+                }
+                Snackbar.Add("Login exitoso", Severity.Success);
+                NavigationManager.NavigateTo("/");
+            }
+            else
+            {
+                Snackbar.Add("Credenciales invalidas. Inténtelo de nuevo", Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            
+            Snackbar.Add($"Error al iniciar sesión: {ex.Message}", Severity.Error);
+        }
+        
+    }
+}

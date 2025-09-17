@@ -1,0 +1,64 @@
+﻿﻿﻿<AuthorizeView>
+    <Authorized>
+        <MudStack Row="true" Spacing="2" Justify="Justify.Center" AlignItems="AlignItems.Center">
+            <MudText Typo="Typo.subtitle1" Align="Align.Center" Class="d-inline-flex" Style="white-space: nowrap;">
+                Hola, @username
+            </MudText>
+            <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="EditUser"
+                       Style="background-color: rgba(255,255,255,0.2); color: white;">
+                <MudIcon Icon="@Icons.Material.Filled.PersonPin" />Perfil
+            </MudButton>
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Logout"
+                       Style="background-color: rgba(255,255,255,0.2); color: white;">
+                <MudIcon Icon="@Icons.Material.Filled.ExitToApp" />Salir
+            </MudButton>
+        </MudStack>
+    </Authorized>
+    <NotAuthorized>
+        <MudContainer>
+            <MudStack Row="true" Spacing="2" Justify="Justify.Center" AlignItems="AlignItems.Center">
+                <MudButton Href="/login" Variant="Variant.Filled" Color="Color.Primary"
+                           Style="background-color: rgba(255,255,255,0.2); color: white;">
+                    <MudIcon Icon="@Icons.Material.Filled.Login" />Iniciar Sesion
+                </MudButton>
+                <MudButton Href="/register" Color="Color.Primary" Variant="Variant.Filled"
+                           Style="background-color: rgba(255,255,255,0.2); color: white;">
+                    <MudIcon Icon="@Icons.Material.Filled.HowToReg" />Registrarse
+                </MudButton>
+            </MudStack>
+        </MudContainer>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code 
+{
+    public string? username { get; set; } 
+    public string? role { get; set; }
+
+    [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
+    [Inject] private AuthService AuthService { get; set; } = null!;
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        username = await AuthService.GetNameAsync();
+        role = await AuthService.GetUserRoleAsync();    
+    }
+
+    private async Task Logout()
+    {
+        if (AuthenticationStateProvider is AuthenticationProviderJWT customProvider)
+        {
+            await customProvider.Logout();
+        }
+
+        NavigationManager.NavigateTo("/login");
+    }
+    private void EditUser(MouseEventArgs args)
+    {
+        NavigationManager.NavigateTo("/profile");
+    }
+}

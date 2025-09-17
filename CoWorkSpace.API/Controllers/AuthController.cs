@@ -1,6 +1,7 @@
 ﻿using CoWorkSpace.Business.Interfaces;
 using CoWorkSpace.Domain.DTOs.Requests;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoWorkSpace.API.Controllers
 {
@@ -35,14 +36,29 @@ namespace CoWorkSpace.API.Controllers
             {
                 return BadRequest("Invalid registration request.");
             }
-            var response = await _authService.Register(createUser);
-            if (response != null)
+            try
             {
-                return CreatedAtAction(nameof(Register), new { id = response.Id }, response);
+                var response = await _authService.Register(createUser);
+                if (response != null)
+                {
+                    return CreatedAtAction(nameof(Register), new { id = response.Id }, response);
+                }
+                else
+                {
+                    return BadRequest("Registration failed.");
+                }
             }
-            else
+            catch (DbUpdateException ex)
             {
-                return BadRequest("Registration failed.");
+                if (ex.InnerException!.Message.Contains("duplicate"))
+                {
+                    return Conflict(new { Message = "Ese correo ya esta siendo utilizado por otro usuario", isSuccess = false });
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.InnerException!.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
     }
